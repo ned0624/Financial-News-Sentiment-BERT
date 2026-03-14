@@ -1,12 +1,12 @@
 # Financial News Sentiment Analysis with BERT
 
-Fine-tuning **BERT** (bert-base-uncased) to classify financial news sentences into **positive / negative / neutral** sentiment.
+Fine-tuning **BERT** (bert-base-uncased) to classify financial news sentences into **positive / neutral / negative** sentiment.
 
 ## 📌 Project Overview
 
 Sentiment analysis of financial news is a core component in quantitative trading and financial AI systems. By understanding whether news carries positive or negative sentiment, models can be used to inform trading signals, risk assessment, and market analysis.
 
-**Dataset:** [Financial PhraseBank](https://huggingface.co/datasets/financial_phrasebank) (Malo et al., 2014)  
+**Dataset:** [Financial PhraseBank](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news) (Malo et al., 2014)  
 **Model:** bert-base-uncased (HuggingFace Transformers)  
 **Task:** 3-class text classification (positive / neutral / negative)
 
@@ -20,10 +20,22 @@ Sentiment analysis of financial news is a core component in quantitative trading
 
 | Metric | Score |
 |--------|-------|
-| **Test Accuracy** | — |
-| **F1 Score (weighted)** | — |
+| **Test Accuracy** | 87.6% |
+| **Negative Recall** | 86.8% (79/91) |
+| **Neutral Recall** | 88.7% (383/432) |
+| **Positive Recall** | 82.4% (168/204) |
 
-*Run the notebook to populate results.*
+### Training Curve
+![Training Curve](training_curve.png)
+*Validation accuracy stabilizes at ~88% while training accuracy continues to rise — mild overfitting observed after epoch 2.*
+
+### Confusion Matrix
+![Confusion Matrix](confusion_matrix.png)
+*Model performs best on neutral class (dominant class). Positive sentences are occasionally misclassified as neutral (33 cases).*
+
+### Dataset Distribution
+![EDA Plots](eda_plots.png)
+*Imbalanced dataset: neutral (2,879) >> positive (1,363) > negative (604). Average sentence length: 23 words.*
 
 ## 🏗️ Model Architecture
 
@@ -51,9 +63,9 @@ Output: 3-class probability distribution
 ```
 Financial-News-Sentiment-BERT/
 ├── sentiment_analysis.ipynb   # Main notebook
-├── training_curve.png         # Loss & accuracy plots (generated)
-├── confusion_matrix.png       # Confusion matrix (generated)
-├── eda_plots.png              # EDA visualizations (generated)
+├── training_curve.png         # Loss & accuracy plots
+├── confusion_matrix.png       # Confusion matrix
+├── eda_plots.png              # EDA visualizations
 ├── best_model.pth             # Best model weights (generated)
 ├── requirements.txt
 └── README.md
@@ -74,18 +86,20 @@ cd Financial-News-Sentiment-BERT
 pip install -r requirements.txt
 ```
 
-### 3. Run the notebook
+### 3. Prepare dataset
 
-Open `sentiment_analysis.ipynb` in Jupyter and run all cells.  
-The dataset is automatically downloaded from HuggingFace — no manual download needed.
+Download `all-data.csv` from [Kaggle](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news) and place it in the project root.
 
-> 💡 GPU recommended but not required. CPU training takes approximately 20–30 minutes.
+### 4. Run the notebook
+
+Open `sentiment_analysis.ipynb` in Jupyter and run all cells.
+
+> 💡 GPU recommended. CPU training takes approximately 20–30 minutes.
 
 ## 🛠️ Tech Stack
 
 - **PyTorch** — training loop, GPU support
 - **HuggingFace Transformers** — BERT model and tokenizer
-- **HuggingFace Datasets** — Financial PhraseBank loading
 - **scikit-learn** — evaluation metrics, train/test split
 - **Matplotlib / Seaborn** — visualization
 
@@ -95,13 +109,14 @@ The dataset is automatically downloaded from HuggingFace — no manual download 
 - Custom PyTorch `Dataset` class for NLP
 - AdamW optimizer with linear warmup scheduler
 - Gradient clipping for stable transformer training
-- Evaluation with Accuracy, F1 Score, and Confusion Matrix
-- Inference on custom text inputs with confidence scores
+- Evaluation with Accuracy, Confusion Matrix, and Per-class Recall
+- Handling class imbalance in real-world NLP datasets
 
 ## 🔗 Related Projects
 
 - [AOI Defect Classification with CNN](https://github.com/ned0624/Defect-Classifications-of-AOI)
 - [Retinal Vessel Segmentation with U-Net](https://github.com/ned0624/Retinal-Vessel-Segmentation)
+- [Western Blot Image Synthesis with cGAN](https://github.com/ned0624/Western-Blot-GAN)
 
 ---
 
