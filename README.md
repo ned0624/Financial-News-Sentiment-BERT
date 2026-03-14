@@ -1,13 +1,13 @@
-# Financial News Sentiment Analysis with BERT
+# Financial News Sentiment Analysis with FinBERT
 
-Fine-tuning **BERT** (bert-base-uncased) to classify financial news sentences into **positive / neutral / negative** sentiment.
+Fine-tuning **FinBERT** (ProsusAI/finbert) to classify financial news sentences into **positive / neutral / negative** sentiment.
 
 ## 📌 Project Overview
 
 Sentiment analysis of financial news is a core component in quantitative trading and financial AI systems. By understanding whether news carries positive or negative sentiment, models can be used to inform trading signals, risk assessment, and market analysis.
 
 **Dataset:** [Financial PhraseBank](https://www.kaggle.com/datasets/ankurzing/sentiment-analysis-for-financial-news) (Malo et al., 2014)  
-**Model:** bert-base-uncased (HuggingFace Transformers)  
+**Model:** ProsusAI/finbert (domain-specific BERT pre-trained on financial text)  
 **Task:** 3-class text classification (positive / neutral / negative)
 
 | Label | Class | Example |
@@ -40,7 +40,7 @@ Sentiment analysis of financial news is a core component in quantitative trading
 ## 🏗️ Model Architecture
 
 ```
-bert-base-uncased (110M parameters)
+ProsusAI/finbert (110M parameters, pre-trained on financial text)
   → [CLS] token embedding
   → Dropout(0.1)
   → Linear(768 → 3)
@@ -54,9 +54,10 @@ Output: 3-class probability distribution
 | Batch Size | 16 |
 | Epochs | 4 |
 | Learning Rate | 2e-5 |
-| Optimizer | AdamW |
-| Scheduler | Linear warmup |
+| Optimizer | AdamW + weight decay 0.01 |
+| Scheduler | Linear warmup (10% steps) |
 | Gradient Clipping | 1.0 |
+| Loss Function | CrossEntropyLoss (class-weighted) |
 
 ## 📁 Project Structure
 
@@ -99,18 +100,18 @@ Open `sentiment_analysis.ipynb` in Jupyter and run all cells.
 ## 🛠️ Tech Stack
 
 - **PyTorch** — training loop, GPU support
-- **HuggingFace Transformers** — BERT model and tokenizer
-- **scikit-learn** — evaluation metrics, train/test split
+- **HuggingFace Transformers** — FinBERT model and tokenizer
+- **scikit-learn** — evaluation metrics, train/test split, class weight computation
 - **Matplotlib / Seaborn** — visualization
 
 ## 💡 Key Concepts Demonstrated
 
-- BERT fine-tuning for downstream classification tasks
-- Custom PyTorch `Dataset` class for NLP
+- Domain-specific BERT (FinBERT) fine-tuning for financial NLP
+- Custom PyTorch `Dataset` class for text classification
 - AdamW optimizer with linear warmup scheduler
+- Weighted CrossEntropyLoss to handle class imbalance
 - Gradient clipping for stable transformer training
 - Evaluation with Accuracy, Confusion Matrix, and Per-class Recall
-- Handling class imbalance in real-world NLP datasets
 
 ## 🔗 Related Projects
 
