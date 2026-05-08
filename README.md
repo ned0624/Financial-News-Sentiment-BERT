@@ -113,12 +113,6 @@ Open `sentiment_analysis.ipynb` in Jupyter and run all cells.
 - Gradient clipping for stable transformer training
 - Evaluation with Accuracy, Confusion Matrix, and Per-class Recall
 
-## 🔗 Related Projects
-
-- [AOI Defect Classification with CNN](https://github.com/ned0624/Defect-Classifications-of-AOI)
-- [Retinal Vessel Segmentation with U-Net](https://github.com/ned0624/Retinal-Vessel-Segmentation)
-- [Western Blot Image Synthesis with cGAN](https://github.com/ned0624/Western-Blot-GAN)
-
 ---
 
 *Dataset: Malo, P., Sinha, A., Korhonen, P., Wallenius, J., & Takala, P. (2014). Good debt or bad debt: Detecting semantic orientations in economic texts. Journal of the American Society for Information Science and Technology.*
